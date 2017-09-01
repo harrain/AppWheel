@@ -11,7 +11,7 @@ import android.graphics.drawable.StateListDrawable;
 public class DrawableUtil {
     public static GradientDrawable createShape(int color){
         GradientDrawable drawable = new GradientDrawable();
-        drawable.setCornerRadius(UIutil.dip2px(5));//设置4个角的弧度
+        drawable.setCornerRadius(UIConvertUtils.dp2px(5));//设置4个角的弧度
         drawable.setColor(color);
         return drawable;
     }

@@ -1,5 +1,6 @@
 package com.damon.appwheel.view.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by stephen on 2017/7/25.
  */
 
-public class BaseActivity extends AppCompatActivity {
+public  class BaseActivity extends AppCompatActivity {
 
     // 管理运行的所有的activity
     public final static List<BaseActivity> mActivities = new LinkedList<BaseActivity>();
@@ -25,6 +26,9 @@ public class BaseActivity extends AppCompatActivity {
 //		}
 //	}
 
+    public Context mContext;
+    public boolean first;
+    public String tag;
 
 
     @Override
@@ -33,14 +37,15 @@ public class BaseActivity extends AppCompatActivity {
 //		receiver=new KillAllReceiver();
 //		IntentFilter filter=new IntentFilter("com.app.killall");
 //		registerReceiver(receiver, filter);
-
+        mContext = this;
+        tag = getLocalClassName();
 
         synchronized (mActivities) {
             mActivities.add(this);
         }
         init();
         initView();
-        initActionBar();
+
     }
 
     @Override
@@ -80,10 +85,8 @@ public class BaseActivity extends AppCompatActivity {
         // 杀死当前的进程
         android.os.Process.killProcess(android.os.Process.myPid());
     }
-    protected void initActionBar() {
-    }
-    protected void initView() {
-    }
-    protected void init() {
-    }
+
+    public  void initView(){}
+
+    public void init() {}
 }

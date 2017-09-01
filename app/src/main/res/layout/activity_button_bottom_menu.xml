@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:background="@android:color/white"
+        android:id="@+id/ll"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_alignParentBottom="true"
+        >
+        <LinearLayout
+            android:id="@+id/wx"
+            android:onClick="front"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/weixin_iv"
+                android:src="@drawable/weixin_normal"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:text="照片"
+                android:layout_marginBottom="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:onClick="list"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/contact_iv"
+                android:src="@drawable/contact_list_normal"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:text="轨迹"
+                android:layout_marginBottom="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:onClick="track"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/track_iv"
+                android:src="@drawable/contact_list_pressed"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+            <TextView
+                android:text="鹰眼"
+                android:layout_marginBottom="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/baidu"
+            android:onClick="search"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/find_iv"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/find_normal" />
+
+            <TextView
+                android:text="定位"
+                android:layout_marginBottom="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:onClick="device"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/profile_iv"
+                android:src="@drawable/profile_normal"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:text="我的"
+                android:layout_marginBottom="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb"
+        app:title="照片"
+        app:titleTextColor="@android:color/white"
+        android:background="@color/Black5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/add_btn"
+            android:onClick="add"
+            android:src="@drawable/add_icon"
+            android:background="@drawable/titlebar_button_selector"
+            android:layout_gravity="right"
+            android:layout_marginRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@+id/fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tb"
+        android:layout_above="@+id/ll" />
+
+
+
+
+</RelativeLayout>

@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.damon.appwheel.view.LoadingPage;
-import com.damon.appwheel.view.LoadingPage.LoadResult;
+import com.damon.appwheel.view.widget.LoadingPage;
+import com.damon.appwheel.view.widget.LoadingPage.LoadResult;
 import com.damon.appwheel.view.util.ViewUtil;
 
 import java.util.List;

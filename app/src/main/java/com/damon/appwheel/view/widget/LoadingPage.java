@@ -1,4 +1,4 @@
-package com.damon.appwheel.view;
+package com.damon.appwheel.view.widget;
 
 import android.content.Context;
 import android.os.AsyncTask;

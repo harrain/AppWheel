@@ -19,16 +19,28 @@ public class FileUtils {
 	}
 	
 	/**
-	 * 修改本地缓存的图片名称
+	 * 修改本地任意文件名称
 	 * @param context
-	 * @param oldImgName
-	 * @param newImgName
+	 * @param oldName
+	 * @param newName
 	 */
-	public static void renameImageFileName(Context context, String oldImgName, String newImgName){
-		String dir = getDir(context, oldImgName);
+	public static void renameFileName(Context context, String oldName, String newName){
+		String dir = getDir(context, oldName);
 		File oldFile=new File(dir);
-		dir=getDir(context, newImgName);
+		dir=getDir(context, newName);
 		File newFile=new File(dir);
 		oldFile.renameTo(newFile);
+	}
+
+	public static File createFile(String path){
+		File file=new File(path);
+
+		if(!file.getParentFile().exists()){//若不存在目录，则创建
+			boolean isSuccess = file.getParentFile().mkdirs();
+			if(!isSuccess){//若文件所在目录创建失败，则返回
+				return null;
+			}
+		}
+		return file;
 	}
 }
