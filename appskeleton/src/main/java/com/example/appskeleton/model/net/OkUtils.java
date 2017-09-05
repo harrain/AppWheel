@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
+import com.example.appskeleton.model.OnCompleteListener;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -54,12 +55,6 @@ public class OkUtils<T> {
     RequestBody mFileBody;
     FormBody.Builder mFormBodyBuilder;
     MultipartBody.Builder mMultipartBodyBuilder;
-
-    public interface OnCompleteListener<T> {
-        void onSuccess(T result);
-
-        void onError(String error);
-    }
 
     private OnCompleteListener<T> mListener;
 
