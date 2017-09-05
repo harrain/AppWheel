@@ -1,22 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="transparent">#00000000</color>
-    <color name="white">#FFFFFF</color>
-    <color name="red500">#F44336</color>
 
-    <color name="Black4">#121415</color>
-    <color name="Black5">#242125</color>
-    <color name="Black6">#313641</color>
-
-    <color name="title_bg">#fafafa</color>
-    <color name="gray">#eeeeee</color>
-    <color name="dark_grey">#6c6b6b</color>
-
-    <!--rv的分割条ItemDecoration底色，MeFragment的空白区背景色-->
-    <color name="vacant_background">#90efeeee</color>
-
-    <color name="light_blue">#aa3a89ea</color>
 </resources>
