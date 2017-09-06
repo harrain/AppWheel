@@ -7,13 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.demowechat.R;
-import com.example.demowechat.rlPart.base.AdapterArrayListOperation;
-import com.example.demowechat.rlPart.base.BaseAdapter;
-import com.example.demowechat.rlPart.holder.EmptyHolder;
-import com.example.demowechat.rlPart.holder.HeadLayoutHolder;
-import com.example.demowechat.rlPart.holder.TextOnOffHolder;
-import com.example.demowechat.rlPart.holder.TextOnlyHolder;
+import com.example.appskeleton.R;
+import com.example.appskeleton.view.rlPart.base.AdapterArrayListOperation;
+import com.example.appskeleton.view.rlPart.base.BaseAdapter;
+import com.example.appskeleton.view.rlPart.holder.EmptyHolder;
+import com.example.appskeleton.view.rlPart.holder.HeadLayoutHolder;
+import com.example.appskeleton.view.rlPart.holder.TextOnOffHolder;
+import com.example.appskeleton.view.rlPart.holder.TextOnlyHolder;
 
 import java.util.List;
 

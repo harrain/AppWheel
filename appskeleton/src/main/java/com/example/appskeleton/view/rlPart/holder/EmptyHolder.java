@@ -3,9 +3,10 @@ package com.example.appskeleton.view.rlPart.holder;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.example.demowechat.R;
-import com.example.demowechat.rlPart.base.AdapterDataOperation;
-import com.example.demowechat.rlPart.base.BaseMyHolder;
+import com.example.appskeleton.R;
+import com.example.appskeleton.view.rlPart.base.AdapterDataOperation;
+import com.example.appskeleton.view.rlPart.base.BaseMyHolder;
+
 
 /**
  * Created by data on 2017/8/24.
