@@ -3,7 +3,7 @@ package com.example.appskeleton.model.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.appskeleton.MyApplication;
+import com.example.appskeleton.view.util.Utils;
 
 
 /**
@@ -31,7 +31,7 @@ public class SharePrefrenceUtils {
     public static SharePrefrenceUtils getInstance(){
         if (instance==null){
             instance = new SharePrefrenceUtils();
-            sharedPreferences = MyApplication.getInstance().
+            sharedPreferences = Utils.getContext().
                     getSharedPreferences(PREFRENCE_NAME, Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
         }

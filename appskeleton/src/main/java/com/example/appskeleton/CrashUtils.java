@@ -6,6 +6,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 
+import com.example.appskeleton.view.util.Utils;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -42,7 +44,7 @@ public final class CrashUtils {
 
     static {
         try {
-            PackageInfo pi = MyApplication.getInstance().getPackageManager().getPackageInfo(MyApplication.getInstance().getPackageName(), 0);
+            PackageInfo pi = Utils.getContext().getPackageManager().getPackageInfo(Utils.getContext().getPackageName(), 0);
             if (pi != null) {
                 versionName = pi.versionName;
                 versionCode = pi.versionCode;
@@ -145,10 +147,10 @@ public final class CrashUtils {
         }
         if (mInitialized) return true;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
-                && MyApplication.getInstance().getExternalCacheDir() != null)
-            defaultDir = MyApplication.getInstance().getExternalCacheDir() + FILE_SEP + "crash" + FILE_SEP;
+                && Utils.getContext().getExternalCacheDir() != null)
+            defaultDir = Utils.getContext().getExternalCacheDir() + FILE_SEP + "crash" + FILE_SEP;
         else {
-            defaultDir = MyApplication.getInstance().getCacheDir() + FILE_SEP + "crash" + FILE_SEP;
+            defaultDir = Utils.getContext().getCacheDir() + FILE_SEP + "crash" + FILE_SEP;
         }
         Thread.setDefaultUncaughtExceptionHandler(UNCAUGHT_EXCEPTION_HANDLER);
         return mInitialized = true;

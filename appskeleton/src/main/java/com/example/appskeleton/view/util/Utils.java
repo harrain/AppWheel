@@ -2,8 +2,6 @@ package com.example.appskeleton.view.util;
 
 import android.content.Context;
 
-import com.example.appskeleton.MyApplication;
-
 
 /**
  * Created by data on 2017/9/1.
@@ -11,7 +9,11 @@ import com.example.appskeleton.MyApplication;
 
 public class Utils {
 
+    private static Context mContext;
+
+    public static void init(Context context){mContext = context;}
+
     public static Context getContext(){
-        return MyApplication.getInstance();
+        return mContext;
     }
 }
