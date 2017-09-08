@@ -49,9 +49,9 @@ public class BaseAdapter<DT> extends RecyclerView.Adapter <RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        ((BaseMyHolder)holder).setOnClickListener(listener);
         ((BaseMyHolder)holder).bind(position,mADO);
 //        LogUtils.i("baseUDAdapter","mADO.getDatas().size:  "+mADO.getDatas().size());
-        ((BaseMyHolder)holder).setOnClickListener(listener);
     }
 
 
