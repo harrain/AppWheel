@@ -10,6 +10,8 @@
     <color name="Black4">#121415</color>
     <color name="Black5">#242125</color>
     <color name="Black6">#313641</color>
+    <color name="lighter_black">#60313641</color>
+    <color name="light_black">#90313641</color>
 
     <color name="title_bg">#fafafa</color>
     <color name="gray">#eeeeee</color>
@@ -20,4 +22,5 @@
 
     <color name="light_blue">#aa3a89ea</color>
     <color name="yellow">#dce474</color>
+    <color name="green">#40e434</color>
 </resources>
