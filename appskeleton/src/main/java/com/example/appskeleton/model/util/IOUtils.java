@@ -72,4 +72,21 @@ public class IOUtils {
     }
 
 
+    public static String readFromStream(InputStream inputStream) {
+        try {
+            StringBuilder sb = new StringBuilder();
+            InputStreamReader read = new InputStreamReader(inputStream);// 考虑到编码格式
+            BufferedReader bufferedReader = new BufferedReader(read);
+            String lineText = null;
+            while ((lineText = bufferedReader.readLine()) != null) {
+                sb.append(lineText);
+            }
+            bufferedReader.close();
+            read.close();
+            return sb.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

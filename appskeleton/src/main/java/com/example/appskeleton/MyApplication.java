@@ -13,18 +13,22 @@ import com.example.appskeleton.view.util.Utils;
 
 public class MyApplication extends Application {
 
-    private static MyApplication instance;
-    private static int mainTid;
-    private Context mContext;
+    public static MyApplication instance;
+    public static int mainTid;
+    public Context mContext;
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
         mainTid = android.os.Process.myTid();
         mContext = getApplicationContext();
-        LogUtils.init(this,AppConstants.APPLICATION_ID,BuildConfig.DEBUG);
-        CrashUtils.init(FileUtils.createFile(ModelConstants.CRASH_DIR));
+
         Utils.init(mContext);
+        CrashUtils.init(FileUtils.createFile(ModelConstants.CRASH_DIR));
+		ToastUtil.init(mContext);
+
+ //       LogUtils.init(this, BuildConfig.APPLICATION_ID, BuildConfig.DEBUG);
+ //       ToastFactory.init(mContext,BuildConfig.DEBUG);
     }
 
     public static int getMainTid() {

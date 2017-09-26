@@ -1,4 +1,4 @@
-package com.example.appskeleton;
+package com.example.appskeleton.util;
 
 import android.content.Context;
 import android.util.Log;

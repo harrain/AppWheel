@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-    <include
-        android:id="@+id/titlebar"
-        layout="@layout/title_bar"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/netStatus_tv"
-        android:layout_below="@id/titlebar"
+        android:visibility="gone"
+        android:id="@+id/status_tv"
         android:text="网络中断，请检查网络..."
         android:textSize="14sp"
         android:textColor="@color/red500"
@@ -25,9 +18,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"
-        android:layout_below="@id/netStatus_tv"
+        android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-
-</RelativeLayout>
+</LinearLayout>

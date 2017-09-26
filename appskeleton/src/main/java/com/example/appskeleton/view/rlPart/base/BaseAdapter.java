@@ -16,11 +16,11 @@ public class BaseAdapter<DT> extends RecyclerView.Adapter <RecyclerView.ViewHold
     public Context mContext;
 
 //    private AdapterLinkOperation<DT> mADO;
-    private AdapterDataOperation mADO;
-    private BaseMyHolder myHolder;
+    public AdapterDataOperation mADO;
 
-    private OnClickListener listener;
-    private  final String TAG = "BaseAdapter";
+
+    public OnClickListener listener;
+    public    String tag = "BaseAdapter";
 
     public BaseAdapter(Context context) {
         mContext = context;
@@ -44,7 +44,7 @@ public class BaseAdapter<DT> extends RecyclerView.Adapter <RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return myHolder.newInstance();
+        return null;
     }
 
     @Override

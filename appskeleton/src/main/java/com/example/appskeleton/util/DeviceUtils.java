@@ -1,4 +1,4 @@
-package com.example.appskeleton;
+package com.example.appskeleton.util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -54,8 +54,8 @@ public class DeviceUtils {
      *
      * @return 设备系统版本号
      */
-    public static int getSDKVersion() {
-        return android.os.Build.VERSION.SDK_INT;
+    public static String getSDKVersion() {
+        return android.os.Build.VERSION.SDK_INT+"";
     }
 
     /**

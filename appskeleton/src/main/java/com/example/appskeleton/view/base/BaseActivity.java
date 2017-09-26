@@ -92,4 +92,25 @@ public  class BaseActivity extends AppCompatActivity {
     public void init() {}
 
     public void notifyData(){}
+
+    public void checkNetStatus(View view){
+        if ( NetworkUtils.getDataEnabled() || NetworkUtils.getWifiEnabled()) return;
+        Snackbar.make(view, R.string.net_internal, Snackbar.LENGTH_INDEFINITE)
+                .setAction("知道了", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onBack();
+    }
+
+    public void onBack() {
+        finish();
+    }
 }

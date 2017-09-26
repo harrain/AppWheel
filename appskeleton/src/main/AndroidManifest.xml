@@ -15,7 +15,11 @@
         android:theme="@style/AppTheme">
         <activity android:name=".view.activity.MainActivity" />
         <activity android:name=".view.activity.ButtonBottomMenuActivity" />
-        <activity android:name=".view.activity.NetStatusTipRVActivity"></activity>
+        <activity android:name=".view.activity.NetStatusTipRVActivity" />
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".util.ShowCrashActivity"></activity>
     </application>
 
 </manifest>

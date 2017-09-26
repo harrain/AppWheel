@@ -1,5 +1,6 @@
-package com.example.appskeleton;
+package com.example.appskeleton.util;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -35,7 +36,7 @@ public final class CrashUtils {
     private static int     versionCode;
 
     private static final String FILE_SEP = System.getProperty("file.separator");
-    private static final Format FORMAT   = new SimpleDateFormat("MM-dd HH-mm-ss", Locale.getDefault());
+    private static final Format FORMAT   = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.getDefault());
 
     private static final String CRASH_HEAD;
 
@@ -53,16 +54,18 @@ public final class CrashUtils {
             e.printStackTrace();
         }
 
-        CRASH_HEAD = "\n************* Crash Log Head ****************" +
+        CRASH_HEAD = "\n************* 哦no  崩溃了****************" +
                 "\nDevice Manufacturer: " + Build.MANUFACTURER +// 设备厂商
                 "\nDevice Model       : " + Build.MODEL +// 设备型号
                 "\nAndroid Version    : " + Build.VERSION.RELEASE +// 系统版本
                 "\nAndroid SDK        : " + Build.VERSION.SDK_INT +// SDK版本
+                "\nCPU ABI            : " + Build.CPU_ABI +
                 "\nApp VersionName    : " + versionName +
                 "\nApp VersionCode    : " + versionCode +
-                "\n************* Crash Log Head ****************\n\n";
+                "\n************* Crash Cause ****************\n\n";
 
         DEFAULT_UNCAUGHT_EXCEPTION_HANDLER = Thread.getDefaultUncaughtExceptionHandler();
+
 
         UNCAUGHT_EXCEPTION_HANDLER = new UncaughtExceptionHandler() {
             @Override
@@ -73,38 +76,66 @@ public final class CrashUtils {
                     return;
                 }
 
-
-                Date now = new Date(System.currentTimeMillis());
-                String fileName = FORMAT.format(now) + ".txt";
-                final String fullPath = (dir == null ? defaultDir : dir) + fileName;
-                if (!createOrExistsFile(fullPath)) return;
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        PrintWriter pw = null;
-                        try {
-                            pw = new PrintWriter(new FileWriter(fullPath, false));
-                            pw.write(CRASH_HEAD);
-                            e.printStackTrace(pw);
-                            Throwable cause = e.getCause();
-                            while (cause != null) {
-                                cause.printStackTrace(pw);
-                                cause = cause.getCause();
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } finally {
-                            if (pw != null) {
-                                pw.close();
-                            }
+                        while (flag[0]){
+
                         }
                     }
                 }).start();
+                showCrashActivity(e);
+
+                uploadExceptionToServer(e);
+
+                if (writeToExternalStorage(e)) return;
                 if (DEFAULT_UNCAUGHT_EXCEPTION_HANDLER != null) {
                     DEFAULT_UNCAUGHT_EXCEPTION_HANDLER.uncaughtException(t, e);
                 }
             }
         };
+    }
+
+    private static void showCrashActivity(Throwable e) {
+        Intent i = new Intent(Utils.getContext(),ShowCrashActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("crash",CRASH_HEAD+e+"\n\n应用发生崩溃，对您造成使用上的不便，深感抱歉！后台工程师正在加紧时间处理。");
+        Utils.getContext().startActivity(i);
+    }
+
+    public static final boolean[] flag = {true};
+
+    private static void uploadExceptionToServer(Throwable e) {
+    }
+
+    private static boolean writeToExternalStorage(final Throwable e) {
+        Date now = new Date(System.currentTimeMillis());
+        String fileName = FORMAT.format(now) + ".txt";
+        final String fullPath = (dir == null ? defaultDir : dir) + fileName;
+        if (!createOrExistsFile(fullPath)) return true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                PrintWriter pw = null;
+                try {
+                    pw = new PrintWriter(new FileWriter(fullPath, false));
+                    pw.write(CRASH_HEAD);
+                    e.printStackTrace(pw);
+                    Throwable cause = e.getCause();
+                    while (cause != null) {
+                        cause.printStackTrace(pw);
+                        cause = cause.getCause();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (pw != null) {
+                        pw.close();
+                    }
+                }
+            }
+        }).start();
+        return false;
     }
 
     private CrashUtils() {
