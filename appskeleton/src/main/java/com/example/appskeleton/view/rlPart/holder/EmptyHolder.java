@@ -35,8 +35,4 @@ public class EmptyHolder extends BaseMyHolder {
 
     }
 
-    @Override
-    public BaseMyHolder newInstance() {
-        return null;
-    }
 }

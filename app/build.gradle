@@ -11,6 +11,16 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+//            storeFile file("appwheel.jks")
+//            storeType "jks"
+//            storePassword "helloworld"
+//            keyAlias "appwheel"
+//            keyPassword "helloworld"
+            v2SigningEnabled false
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false

@@ -41,10 +41,6 @@ public class FileItemHolder extends BaseMyHolder<Link<String>> {
         mContext = context;
     }
 
-    @Override
-    public BaseMyHolder newInstance() {
-        return new FileItemHolder(contentView,mContext);
-    }
 
     @Override
     public void bind(final int position, final AdapterDataOperation<Link<String>> ado) {

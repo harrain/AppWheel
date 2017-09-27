@@ -2,8 +2,6 @@ package com.example.appskeleton.view.activity;
 
 import android.app.LoaderManager;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Paint;
@@ -14,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -56,8 +53,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.login_toolbar);
         setSupportActionBar(toolbar);
-        imgBack = (ImageView) findViewById(R.id.scanner_toolbar_back);
-        txtTitle  = (TextView) findViewById(R.id.scanner_toolbar_title);
+        imgBack = (ImageView) findViewById(R.id.toolbar_back);
+        txtTitle  = (TextView) findViewById(R.id.toolbar_title);
         txtTitle.setText("登录");
         imgBack.setVisibility(View.VISIBLE);
         txtTitle.setVisibility(View.VISIBLE);

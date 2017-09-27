@@ -39,7 +39,7 @@ public class LatlngActivityHolder extends BaseMyHolder<List<String>> {
 
     @Override
     public void bind(int position, AdapterDataOperation<List<String>> ado) {
-        final int index = ado.getDatas().size() -1 - position;
+        final int index = ado.getDatas().size() - 1 - position;
         latlngTv.setText(ado.getDatas().get(index));
 
 
@@ -51,9 +51,5 @@ public class LatlngActivityHolder extends BaseMyHolder<List<String>> {
 //                }
 //            }
 //        });
-    }
-    @Override
-    public BaseMyHolder newInstance() {
-        return null;
     }
 }

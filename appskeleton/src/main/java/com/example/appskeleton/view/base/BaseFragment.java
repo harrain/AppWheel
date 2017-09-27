@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.example.appskeleton.util.LogUtils;
 import com.example.appskeleton.view.widget.LoadingPage;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  */

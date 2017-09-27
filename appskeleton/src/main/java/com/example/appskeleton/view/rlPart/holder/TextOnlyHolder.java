@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.appskeleton.LogUtils;
 import com.example.appskeleton.R;
+import com.example.appskeleton.util.LogUtils;
 import com.example.appskeleton.view.rlPart.MeFragmentAdapter;
 import com.example.appskeleton.view.rlPart.base.AdapterDataOperation;
 import com.example.appskeleton.view.rlPart.base.BaseMyHolder;
@@ -42,10 +42,5 @@ public class TextOnlyHolder extends BaseMyHolder<List<MeFragmentAdapter.ItemMode
         }catch (Exception e){
             LogUtils.e(tag,e.getMessage());
         }
-    }
-
-    @Override
-    public BaseMyHolder newInstance() {
-        return null;
     }
 }

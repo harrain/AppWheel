@@ -4,15 +4,14 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.view.View;
 
-import com.example.appskeleton.LogUtils;
 import com.example.appskeleton.R;
+import com.example.appskeleton.util.LogUtils;
 import com.example.appskeleton.view.base.BaseTitleActivity;
 import com.example.appskeleton.view.util.AlertDialogUtil;
 import com.example.appskeleton.view.util.PermissionsUtil;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseTitleActivity {
