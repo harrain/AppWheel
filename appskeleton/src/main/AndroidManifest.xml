@@ -19,7 +19,15 @@
         <activity
             android:name=".view.activity.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".util.ShowCrashActivity"></activity>
+        <activity android:name=".util.ShowCrashActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 广播注册 -->
+        <receiver android:name=".model.downloadmanager.receiver.InstallReceiver">
+            <intent-filter android:priority="20" >
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

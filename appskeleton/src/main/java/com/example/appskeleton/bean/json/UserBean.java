@@ -1,4 +1,4 @@
-package com.example.appskeleton.bean;
+package com.example.appskeleton.bean.json;
 
 /**
  * Created by stephen on 2017/7/25.

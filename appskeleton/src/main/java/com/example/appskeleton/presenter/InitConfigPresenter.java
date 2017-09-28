@@ -3,6 +3,7 @@ package com.example.appskeleton.presenter;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import com.example.appskeleton.constant.Url;
 import com.example.appskeleton.model.downloadmanager.utils.UpdateAppManager;
 import com.example.appskeleton.util.LogUtils;
 import com.example.appskeleton.util.VersionUtils;
@@ -12,12 +13,12 @@ import com.example.appskeleton.view.util.AlertDialogUtil;
  * 初始化配置，App的初始化检查
  */
 
-public class InitConfigPresenter {
-    private Context mContext;
+public class InitConfigPresenter extends PresenterBase{
+
     private String tag = "InitConfigPresenter";
 
     public InitConfigPresenter(Context context) {
-        mContext = context;
+        super(context);
     }
 
     public void antoUpdateVersion(final String url, final String appName){
@@ -38,7 +39,7 @@ public class InitConfigPresenter {
                 }
             }
         });
-        versionUtils.checkVerson();
+        versionUtils.checkVerson(Url.checkUpdateUrl);
     }
 
     private void downloadapk(String url,String appName) {

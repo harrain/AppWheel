@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.example.appskeleton.model.ModelBaseImage;
+import com.example.appskeleton.view.util.Utils;
 
 
 /**
@@ -14,6 +15,7 @@ public class PresenterBaseImage extends PresenterBase implements IPresenterBaseI
     ModelBaseImage mModel;
 
     public PresenterBaseImage() {
+        super(Utils.getContext());
         mModel=new ModelBaseImage();
     }
 

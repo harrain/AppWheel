@@ -1,6 +1,8 @@
 package com.example.appskeleton.presenter;
 
 
+import android.content.Context;
+
 import com.example.appskeleton.model.ModelBase;
 
 /**
@@ -9,13 +11,16 @@ import com.example.appskeleton.model.ModelBase;
 
 public class PresenterBase implements IPresenterBase {
     ModelBase mModel;
-
-    public PresenterBase() {
+    public Context mContext;
+    public String tag = "PresenterBase";
+    public PresenterBase(Context context) {
+        mContext = context;
         this.mModel = new ModelBase();
     }
 
     @Override
     public void release() {
         mModel.release();
+        mContext = null;
     }
 }

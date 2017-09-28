@@ -1,4 +1,4 @@
-package com.example.appskeleton.model;
+package com.example.appskeleton.constant;
 
 import android.os.Environment;
 

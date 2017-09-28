@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.appskeleton.AppConstants;
+import com.example.appskeleton.constant.AppConstants;
 import com.example.appskeleton.R;
 import com.example.appskeleton.model.operation.Link;
 import com.example.appskeleton.view.rlPart.base.AdapterDataOperation;

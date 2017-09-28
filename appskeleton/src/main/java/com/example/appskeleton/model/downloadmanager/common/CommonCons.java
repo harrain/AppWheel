@@ -3,7 +3,7 @@ package com.example.appskeleton.model.downloadmanager.common;
 import android.os.Environment;
 import android.os.SystemClock;
 
-import com.example.appskeleton.AppConstants;
+import com.example.appskeleton.constant.AppConstants;
 
 import java.io.File;
 

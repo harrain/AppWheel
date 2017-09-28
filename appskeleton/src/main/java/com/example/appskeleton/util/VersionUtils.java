@@ -111,7 +111,7 @@ public class VersionUtils {
     /**
      * 从服务器获取版本信息进行校验
      */
-    public  void checkVerson() {
+    public  void checkVerson(final String httpurl) {
         final long startTime = System.currentTimeMillis();
         // 启动子线程异步加载数据
         new Thread() {
@@ -123,7 +123,7 @@ public class VersionUtils {
                 HttpURLConnection conn = null;
                 try {
                     // 本机地址用localhost, 但是如果用模拟器加载本机的地址时,可以用ip(10.0.2.2)来替换
-                    URL url = new URL("http://10.0.2.2:8080/update.json");
+                    URL url = new URL(httpurl);
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");// 设置请求方法
                     conn.setConnectTimeout(15000);// 设置连接超时
@@ -157,6 +157,7 @@ public class VersionUtils {
                     msg.what = CODE_NET_ERROR;
                     e.printStackTrace();
                 }  finally {
+                    mHandler.sendMessage(msg);
                     if (conn != null) {
                         conn.disconnect();// 关闭网络连接
                     }

@@ -1,6 +1,6 @@
-package com.example.appskeleton.view;
+package com.example.appskeleton.constant;
 
-import static com.example.appskeleton.AppConstants.GALARY_DIR;
+import static com.example.appskeleton.constant.AppConstants.GALARY_DIR;
 
 /**
  * Created by data on 2017/9/1.

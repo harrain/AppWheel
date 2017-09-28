@@ -2,11 +2,12 @@ package com.example.appskeleton.presenter;
 
 import android.content.Context;
 
-import com.example.appskeleton.bean.UserBean;
+import com.example.appskeleton.bean.json.UserBean;
 import com.example.appskeleton.model.OnCompleteListener;
 import com.example.appskeleton.model.business.IModelLogin;
 import com.example.appskeleton.model.business.ModelLogin;
 import com.example.appskeleton.view.iview.IViewLogin;
+import com.example.appskeleton.view.util.Utils;
 
 
 /**
@@ -19,6 +20,7 @@ public class PresenterLogin extends PresenterBase implements IPresenterLogin {
     IViewLogin mView;
 
     public PresenterLogin(IViewLogin view) {
+        super(Utils.getContext());
         mModel=new ModelLogin();
         mView=view;
     }

@@ -3,7 +3,7 @@ package com.example.appskeleton;
 import android.app.Application;
 import android.content.Context;
 
-import com.example.appskeleton.model.ModelConstants;
+import com.example.appskeleton.constant.ModelConstants;
 import com.example.appskeleton.model.util.FileUtils;
 import com.example.appskeleton.util.CrashUtils;
 import com.example.appskeleton.util.ToastUtil;

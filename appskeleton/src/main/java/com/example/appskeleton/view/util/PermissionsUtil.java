@@ -9,7 +9,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.example.appskeleton.AppConstants;
+import com.example.appskeleton.constant.AppConstants;
 import com.example.appskeleton.view.listener.PermissionResultListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 

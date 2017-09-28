@@ -2,7 +2,7 @@ package com.example.appskeleton.model.business;
 
 import android.content.Context;
 
-import com.example.appskeleton.bean.UserBean;
+import com.example.appskeleton.bean.json.UserBean;
 import com.example.appskeleton.model.ModelBase;
 import com.example.appskeleton.model.OnCompleteListener;
 import com.example.appskeleton.model.net.OkUtils;
