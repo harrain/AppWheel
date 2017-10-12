@@ -42,6 +42,7 @@ public final class CrashUtils {
 
     private static final UncaughtExceptionHandler DEFAULT_UNCAUGHT_EXCEPTION_HANDLER;
     private static final UncaughtExceptionHandler UNCAUGHT_EXCEPTION_HANDLER;
+    private static String fullPath;
 
     static {
         try {
@@ -84,11 +85,11 @@ public final class CrashUtils {
                         }
                     }
                 }).start();
-                showCrashActivity(e);
 
-                uploadExceptionToServer(e);
 
-                if (writeToExternalStorage(e)) return;
+                if (writeToExternalStorage(e)) return;//崩溃日志写入sd卡
+                uploadExceptionToServer(e);//上传到服务器
+                showCrashActivity(e);//将崩溃日志显示到界面上
                 if (DEFAULT_UNCAUGHT_EXCEPTION_HANDLER != null) {
                     DEFAULT_UNCAUGHT_EXCEPTION_HANDLER.uncaughtException(t, e);
                 }
@@ -100,6 +101,7 @@ public final class CrashUtils {
         Intent i = new Intent(Utils.getContext(),ShowCrashActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("crash",CRASH_HEAD+e+"\n\n应用发生崩溃，对您造成使用上的不便，深感抱歉！后台工程师正在加紧时间处理。");
+        i.putExtra("crash_file_path",fullPath);
         Utils.getContext().startActivity(i);
     }
 
@@ -111,7 +113,7 @@ public final class CrashUtils {
     private static boolean writeToExternalStorage(final Throwable e) {
         Date now = new Date(System.currentTimeMillis());
         String fileName = FORMAT.format(now) + ".txt";
-        final String fullPath = (dir == null ? defaultDir : dir) + fileName;
+        fullPath = (dir == null ? defaultDir : dir) + fileName;
         if (!createOrExistsFile(fullPath)) return true;
         new Thread(new Runnable() {
             @Override

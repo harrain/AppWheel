@@ -19,8 +19,12 @@ public class SharedPrefrenceUtils {
     private static final String RECENT_TRACE_PATH = "recent_trace_path";
     private static final String ISLOGIN = "isLogin";
     private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
     private static final String CURRENT_TIME = "current_time";
     private static final String millisUntilFinished = "millisUntilFinished";
+    private static final String HAS_CRASH_LOG_UNUPLOAD = "has_crash_log_unupload";
+    private static final String DRIVER_ID = "driver_id";
+    private static final String REMEMBER_PASSWORD = "remember_password";
 
     private static SharedPrefrenceUtils instance;
     private static SharedPreferences sharedPreferences;
@@ -74,10 +78,46 @@ public class SharedPrefrenceUtils {
         return sharedPreferences.getBoolean(ISLOGIN,false);
     }
 
+    public void removeLoginState(){
+        editor.remove(ISLOGIN);
+    }
+
     public void setUsername(String username){ editor.putString(USERNAME,username).commit();}
 
     public String getUsername() {
         return sharedPreferences.getString(USERNAME,null);
+    }
+
+    public void removeUsername(){
+        editor.remove(USERNAME);
+    }
+
+    public void setPassword(String password){ editor.putString(PASSWORD,password).commit();}
+
+    public String getPassword() {
+        return sharedPreferences.getString(PASSWORD,null);
+    }
+
+    public void removePassword(){
+        editor.remove(PASSWORD);
+    }
+
+    public void setRememberPassword(boolean rememberPassword){
+        editor.putBoolean(REMEMBER_PASSWORD,rememberPassword).commit();
+    }
+
+    public boolean isRememberPassword(){
+        return sharedPreferences.getBoolean(REMEMBER_PASSWORD,false);
+    }
+
+    public void setDriverId(String driverid){ editor.putString(DRIVER_ID,driverid).commit();}
+
+    public String getDriverId() {
+        return sharedPreferences.getString(DRIVER_ID,null);
+    }
+
+    public void removeDriverId(){
+        editor.remove(DRIVER_ID);
     }
 
     public  String getCurrentTime() {
@@ -95,4 +135,18 @@ public class SharedPrefrenceUtils {
     public long getMillisUntilFinished(){
         return sharedPreferences.getLong(millisUntilFinished,0);
     }
+
+    public void setHasCrashLogUnupload(boolean hasCrashLogUnupload){
+        editor.putBoolean(HAS_CRASH_LOG_UNUPLOAD,hasCrashLogUnupload).commit();
+    }
+
+    public boolean getHasCrashLogUnupload(){
+        return sharedPreferences.getBoolean(HAS_CRASH_LOG_UNUPLOAD,false);
+    }
+
+    public void removeHasCrashLogUnupload(){
+        editor.remove(HAS_CRASH_LOG_UNUPLOAD);
+    }
+
+    
 }

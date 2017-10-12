@@ -68,6 +68,12 @@ public class LogUtils {
         }
     }
 
+    public static void i(String tag, String section,String msg) {
+        if (DEBUG) {
+            Log.i(tag, section+"-----"+msg);
+        }
+    }
+
     public static void w(String tag, String msg) {
         if (DEBUG) {
             Log.w(tag, msg);

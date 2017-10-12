@@ -30,6 +30,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 
 /**
@@ -70,10 +71,13 @@ public class OkUtils<T> {
                     mBuilder = new OkHttpClient.Builder();
                     //获取sd卡的缓存文件夹
                     File cacheDir = context.getExternalCacheDir();
+                    HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLogger());
+                    logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
                     mOkHttpClient = mBuilder
                             .connectTimeout(10, TimeUnit.SECONDS)
                             .writeTimeout(20, TimeUnit.SECONDS)
                             .readTimeout(10, TimeUnit.SECONDS)
+                            .addNetworkInterceptor(logInterceptor)
                             .cache(new Cache(cacheDir,10*(1<<20)))//设置缓存位置和缓存大小
                             .build();
                 }
@@ -188,8 +192,8 @@ public class OkUtils<T> {
         if (mUrl == null) {
             return this;
         }
-        RequestBody fileBody = RequestBody.create(MediaType.parse(guessMimeType(file.getName())), file);
-        mFileBody = new MultipartBody.Builder().addFormDataPart("filename", file.getName(), fileBody).build();
+        RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+        mFileBody = new MultipartBody.Builder().setType(MultipartBody.FORM) .addFormDataPart("application/octet-stream", file.getName(), fileBody).build();
         return this;
     }
     private String guessMimeType(String path) {

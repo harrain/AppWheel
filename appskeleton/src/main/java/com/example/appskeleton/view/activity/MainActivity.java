@@ -3,10 +3,12 @@ package com.example.appskeleton.view.activity;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.view.View;
+import android.widget.RadioGroup;
 
-import com.example.appskeleton.R;
 import com.example.appskeleton.util.LogUtils;
+import com.example.appskeleton.R;
 import com.example.appskeleton.view.base.BaseTitleActivity;
+import com.example.appskeleton.view.listener.PermissionResultListener;
 import com.example.appskeleton.view.util.AlertDialogUtil;
 import com.example.appskeleton.view.util.PermissionsUtil;
 import com.tbruyelle.rxpermissions2.Permission;
@@ -19,8 +21,8 @@ public class MainActivity extends BaseTitleActivity {
 
     RxPermissions rxPermissions;
 
-    private boolean firstEnter = true;
-
+    public boolean firstEnter = true;
+    public RadioGroup radioGroup;
 
 
     @Override
@@ -34,7 +36,7 @@ public class MainActivity extends BaseTitleActivity {
     public void initView() {
         setContentView(R.layout.activity_main);
         super.initView();
-
+        radioGroup = (RadioGroup) findViewById(R.id.main_bottom);
         mTBack.setVisibility(View.GONE);
         mTTitle.setText("mainactivity");
     }
@@ -42,11 +44,11 @@ public class MainActivity extends BaseTitleActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (rxPermissions.isGranted(Manifest.permission.ACCESS_FINE_LOCATION) && rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE) && rxPermissions.isGranted(Manifest.permission.ACCESS_FINE_LOCATION)
                 && rxPermissions.isGranted(Manifest.permission.READ_PHONE_STATE)){
 
         }else {
-            AlertDialogUtil.showForceAlertDialog(mContext, "本应用需要访问以下权限", "存储空间\t\n\n设备信息\t\n\n位置信息", new AlertDialogUtil.AlertListener() {
+            AlertDialogUtil.showForceAlertDialog(mContext, "本应用需要获取以下权限", "读写存储\t\n定位\t\n读取设备信息\t\n\n否则将无法正常使用", new AlertDialogUtil.AlertListener() {
                 @Override
                 public void positiveResult(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -55,10 +57,10 @@ public class MainActivity extends BaseTitleActivity {
             });
         }
 
-        if (firstEnter) {
+//        if (firstEnter) {
 //            front.performClick();
-            firstEnter = false;
-        }
+//            firstEnter = false;
+//        }
     }
 
     private void requestEach() {
@@ -78,7 +80,7 @@ public class MainActivity extends BaseTitleActivity {
                                     permissionName = "定位";
                                     break;
                                 case Manifest.permission.WRITE_EXTERNAL_STORAGE:
-                                    permissionName = "存储";
+                                    permissionName = "读写存储";
                                     break;
                                 case Manifest.permission.READ_PHONE_STATE:
                                     permissionName = "设备信息";
@@ -107,6 +109,18 @@ public class MainActivity extends BaseTitleActivity {
                             });
 
                         }
+                    }
+                });
+    }
+
+    public void requestPermission(final PermissionResultListener listener, final String... permissions) {
+
+        rxPermissions.request(permissions)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean granted) throws Exception {
+                        listener.onHandlePermissionResult(granted);
+
                     }
                 });
     }

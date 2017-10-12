@@ -5,31 +5,42 @@ import android.app.ProgressDialog;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appskeleton.R;
+import com.example.appskeleton.bean.json.UserBean;
 import com.example.appskeleton.model.util.SharedPrefrenceUtils;
+import com.example.appskeleton.presenter.PresenterLogin;
+import com.example.appskeleton.util.LogUtils;
+import com.example.appskeleton.util.ToastUtil;
+import com.example.appskeleton.view.base.BaseActivity;
+import com.example.appskeleton.view.iview.IViewLogin;
+import com.example.appskeleton.view.util.ProgressDialogUtil;
+import com.example.appskeleton.view.widget.ProEditText;
 
 
 /**
  * Login screen
  *
  */
-public class LoginActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class LoginActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>,IViewLogin<UserBean> {
     private static final String TAG = "LoginActivity";
     public static final int REQUEST_CODE_SETNICK = 1;
 
@@ -37,7 +48,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
     TextView txtTitle;
     private AutoCompleteTextView usernameEditText;
-    private EditText passwordEditText;
+    private ProEditText passwordEditText;
+    private CheckBox rememberPassCB;
 
     private boolean progressShow;
     private boolean autoLogin = false;
@@ -46,10 +58,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     private ProgressDialog pd;
     TextView forgotTv;
     TextView register;
+    private PresenterLogin mPresenter;
+    private ProgressDialogUtil progressDialogUtil;
+    private boolean rightPicForETClick = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tag = getLocalClassName();
+
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.login_toolbar);
         setSupportActionBar(toolbar);
@@ -62,6 +79,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         register = (TextView) findViewById(R.id.toRegister);
         forgotTv.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         register.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        mPresenter = new PresenterLogin(this);
+        progressDialogUtil = new ProgressDialogUtil(mContext);
         /*// enter the main activity if already logged in
         if (SuperWeChatHelper.getInstance().isLoggedIn()) {
             autoLogin = true;
@@ -71,7 +91,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         }*/
 
         usernameEditText = (AutoCompleteTextView) findViewById(R.id.username);
-        passwordEditText = (EditText) findViewById(R.id.password);
+        passwordEditText = (ProEditText) findViewById(R.id.password);
+        rememberPassCB = (CheckBox) findViewById(R.id.rememberpass_cb);
 
         // if user changed, clear the password
         usernameEditText.addTextChangedListener(new TextWatcher() {
@@ -102,7 +123,33 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
                 }
             }
         });
+        Drawable[] drawables = passwordEditText.getCompoundDrawables();
+        final Drawable greyEyeDrawable = getResources().getDrawable(R.drawable.grey_eye);
+        greyEyeDrawable.setBounds(drawables[2].getBounds());//这一步不能省略
+        final Drawable eyeDrawable = getResources().getDrawable(R.drawable.eye);
+        eyeDrawable.setBounds(drawables[2].getBounds());
+        passwordEditText.setRightPicOnclickListener(new ProEditText.RightPicOnclickListener() {
+            @Override
+            public void rightPicClick() {
+                rightPicForETClick = !rightPicForETClick;
+                if (rightPicForETClick) {
+                    passwordEditText.setCompoundDrawables(null, null,greyEyeDrawable , null);
+                    passwordEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());//明文
+                }
+                else {
+                    passwordEditText.setCompoundDrawables(null, null,eyeDrawable , null);
+                    passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());//密文
+                }
+            }
+        });
 
+        rememberPassCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) SharedPrefrenceUtils.getInstance().setRememberPassword(true);
+                else SharedPrefrenceUtils.getInstance().setRememberPassword(false);
+            }
+        });
         populateAutoComplete();
 
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +158,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
                 finish();
             }
         });
+
+        if (!TextUtils.isEmpty(SharedPrefrenceUtils.getInstance().getUsername()))
+            usernameEditText.setText(SharedPrefrenceUtils.getInstance().getUsername());
+        if (SharedPrefrenceUtils.getInstance().isRememberPassword()) {
+            passwordEditText.setText(SharedPrefrenceUtils.getInstance().getPassword() + "");
+            rememberPassCB.setChecked(true);
+        }
     }
 
 
@@ -152,10 +206,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             return;
         }
 
-        progressShow = true;
-        SharedPrefrenceUtils.getInstance().setLoginState(true);
-        SharedPrefrenceUtils.getInstance().setUsername(currentUsername);
-        finish();
+
+        progressDialogUtil.createLoadingProgressDialog("提示","正在登录...");
+        try {
+            mPresenter.login(mContext,currentUsername,currentPassword);
+        } catch (Exception e) {
+            LogUtils.i(tag,"login "+e.getMessage());
+            ToastUtil.showShortToast("登陆 "+e.getMessage());
+            e.printStackTrace();
+        }
+
 //        pd = new ProgressDialog(LoginActivity.this);
 //        pd.setCanceledOnTouchOutside(false);
 //        pd.setOnCancelListener(new OnCancelListener() {
@@ -256,7 +316,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (autoLogin) {
             return;
@@ -264,4 +324,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
 
+    @Override
+    public void showResult(UserBean o,int flag) {
+        LogUtils.i(tag,o.toString());
+        progressDialogUtil.dismissDialog();
+        if (o.getCode() == 200 && o.getMessage() .equals("登陆成功") ){
+            ToastUtil.showShortToast("登陆成功");
+            SharedPrefrenceUtils.getInstance().setLoginState(true);
+            SharedPrefrenceUtils.getInstance().setUsername(usernameEditText.getText().toString().trim());
+            finish();
+        }else {
+//            ToastUtil.showShortToast(o.getMessage());
+            finish();
+        }
+    }
+
+    @Override
+    public void showError(String error) {
+        progressDialogUtil.dismissDialog();
+        ToastUtil.showShortToast("登录失败 "+error);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LogUtils.i(tag,"onDestroy");
+        SharedPrefrenceUtils.getInstance().setUsername(usernameEditText.getText().toString().trim());
+        if (SharedPrefrenceUtils.getInstance().isRememberPassword()) SharedPrefrenceUtils.getInstance().setPassword(passwordEditText.getText().toString().trim());
+    }
 }

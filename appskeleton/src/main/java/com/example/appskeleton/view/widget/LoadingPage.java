@@ -1,9 +1,15 @@
 package com.example.appskeleton.view.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+
+import com.example.appskeleton.R;
+import com.example.appskeleton.util.LogUtils;
+import com.example.appskeleton.view.activity.LoginActivity;
 
 
 /**
@@ -17,13 +23,16 @@ public abstract class LoadingPage extends FrameLayout {
     public static final int STATE_ERROR = 2;
     public static final int STATE_EMPTY = 3;
     public static final int STATE_SUCCESS = 4;
+    public static final int STATE_UNLOGIN = 5;
     public   int state = STATE_UNKNOWN;//状态state不能是static，
     // ，因为子类共用父类的静态变量，导致各子类state混淆
     private View loadingView;// 加载中的界面
     private View errorView;// 错误界面
     private View successView;// 加载成功的界面
     private View emptyView;// 空界面
+    private View unLoginView;
     Context mContext;
+    private String tag = "LoadingPage";
 
 
     public LoadingPage(Context context) {
@@ -43,12 +52,14 @@ public abstract class LoadingPage extends FrameLayout {
 
     // 在FrameLayout中 添加几种不同的界面
     private void init(Context context) {
+        LogUtils.i(tag,"init");
         mContext = context;
         errorView = createErrorView(); // 加载错误界面
         if (errorView != null) {
             this.addView(errorView,
                     new LayoutParams(LayoutParams.MATCH_PARENT,
                             LayoutParams.MATCH_PARENT));
+            errorView.setVisibility(View.INVISIBLE);
         }
 
         loadingView = createLoadingView(); // 创建了加载中的界面
@@ -56,14 +67,23 @@ public abstract class LoadingPage extends FrameLayout {
             this.addView(loadingView,
                     new LayoutParams(LayoutParams.MATCH_PARENT,
                             LayoutParams.MATCH_PARENT));
+            loadingView.setVisibility(View.INVISIBLE);
         }
         emptyView = createEmptyView(); // 加载空的界面
         if (emptyView != null) {
             this.addView(emptyView,
                     new LayoutParams(LayoutParams.MATCH_PARENT,
                             LayoutParams.MATCH_PARENT));
+            emptyView.setVisibility(View.INVISIBLE);
         }
 
+        unLoginView = createUnLoginView();
+        if (unLoginView!=null){
+            this.addView(unLoginView,
+                    new LayoutParams(LayoutParams.MATCH_PARENT,
+                            LayoutParams.MATCH_PARENT));
+            unLoginView.setVisibility(View.INVISIBLE);
+        }
 
 
     }
@@ -96,6 +116,10 @@ public abstract class LoadingPage extends FrameLayout {
                     View.VISIBLE : View.INVISIBLE);
         }
 
+        if (unLoginView !=null){
+            unLoginView.setVisibility(state == STATE_UNLOGIN ?
+                    View.VISIBLE : View.INVISIBLE);
+        }
 
 
     }
@@ -117,6 +141,24 @@ public abstract class LoadingPage extends FrameLayout {
 
 
     public abstract View createSuccessView();
+
+    private View createUnLoginView() {
+
+        View view = View.inflate(mContext, R.layout.unlogin_view,null);
+        Button page_bt = (Button) view.findViewById(R.id.signin_btn);
+        page_bt.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToLoginActivity();
+            }
+        });
+        return view;
+    }
+
+    private void goToLoginActivity() {
+        Intent intent = new Intent(mContext, LoginActivity.class);
+        mContext.startActivity(intent);
+    }
 
     private View createErrorView() {
 //        View view = View.inflate(mContext, R.layout.loadpage_error,null);

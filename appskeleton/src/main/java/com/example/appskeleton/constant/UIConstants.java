@@ -44,4 +44,8 @@ public class UIConstants {
     public interface Extra_Key{
 
     }
+
+    public interface ViewListenerFlag{
+
+    }
 }

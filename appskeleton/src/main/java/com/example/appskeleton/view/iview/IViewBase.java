@@ -5,7 +5,7 @@ package com.example.appskeleton.view.iview;
  */
 
 public interface IViewBase<T> {
-    void showResult(T t);
+    void showResult(T t,int flag);
 
     void showError(String error);
 }

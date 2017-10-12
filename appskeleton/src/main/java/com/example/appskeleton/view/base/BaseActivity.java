@@ -2,13 +2,17 @@ package com.example.appskeleton.view.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.appskeleton.R;
 import com.example.appskeleton.util.NetworkUtils;
 
+import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,6 +77,7 @@ public  class BaseActivity extends AppCompatActivity {
         synchronized (mActivities) {
             mActivities.remove(this);
         }
+        fixInputMethodManagerLeak(this);
 //		if(receiver!=null){
 //			unregisterReceiver(receiver);
 //			receiver=null;
@@ -98,9 +103,32 @@ public  class BaseActivity extends AppCompatActivity {
 
     public void notifyData(){}
 
-    public void checkNetStatus(View view){
-        if ( NetworkUtils.getDataEnabled() || NetworkUtils.getWifiEnabled()) return;
+    public boolean checkNetStatus(View view){
+        if ( NetworkUtils.getDataEnabled() || NetworkUtils.getWifiEnabled()) return true;
         Snackbar.make(view, R.string.net_internal, Snackbar.LENGTH_INDEFINITE)
+                .setAction("知道了", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).show();
+        return false;
+    }
+
+    public void checkNetStatus(View view,String text){
+        if ( NetworkUtils.getDataEnabled() || NetworkUtils.getWifiEnabled()) return;
+        Snackbar.make(view, text, Snackbar.LENGTH_INDEFINITE)
+                .setAction("知道了", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).show();
+    }
+
+    public void checkNetStatus(View view,@StringRes int id){
+        if ( NetworkUtils.getDataEnabled() || NetworkUtils.getWifiEnabled()) return;
+        Snackbar.make(view, id, Snackbar.LENGTH_INDEFINITE)
                 .setAction("知道了", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -118,4 +146,46 @@ public  class BaseActivity extends AppCompatActivity {
     public void onBack() {
         finish();
     }
+
+
+
+    public void fixInputMethodManagerLeak(Context destContext) {
+        if (destContext == null) {
+            return;
+        }
+
+        InputMethodManager imm = (InputMethodManager) destContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm == null) {
+            return;
+        }
+
+        String [] arr = new String[]{"mCurRootView", "mServedView", "mNextServedView"};
+        Field f = null;
+        Object obj_get = null;
+        for (int i = 0;i < arr.length;i ++) {
+            String param = arr[i];
+            try{
+                f = imm.getClass().getDeclaredField(param);
+                if (f.isAccessible() == false) {
+                    f.setAccessible(true);
+                } // author: sodino mail:sodino@qq.com
+                obj_get = f.get(imm);
+                if (obj_get != null && obj_get instanceof View) {
+                    View v_get = (View) obj_get;
+                    if (v_get.getContext() == destContext) { // 被InputMethodManager持有引用的context是想要目标销毁的
+                        f.set(imm, null); // 置空，破坏掉path to gc节点
+                    } else {
+                        // 不是想要目标销毁的，即为又进了另一层界面了，不要处理，避免影响原逻辑,也就不用继续for循环了
+
+                            Log.i(tag, "fixInputMethodManagerLeak break, context is not suitable, get_context=" + v_get.getContext()+" dest_context=" + destContext);
+
+                        break;
+                    }
+                }
+            }catch(Throwable t){
+                t.printStackTrace();
+            }
+        }
+    }
+
 }

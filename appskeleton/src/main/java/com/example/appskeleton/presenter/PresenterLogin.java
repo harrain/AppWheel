@@ -37,7 +37,7 @@ public class PresenterLogin extends PresenterBase implements IPresenterLogin {
             @Override
             public void onSuccess(UserBean user) {
                 //编写登录成功的显示代码
-                mView.showResult(user);
+                mView.showResult(user,-1);
             }
 
             @Override

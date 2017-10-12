@@ -43,6 +43,6 @@ public class BaseRefreshActivity extends BaseTitleActivity implements SwipeRefre
 
     @Override
     public void onRefresh() {
-
+        srl.setRefreshing(false);//停止刷新
     }
 }
