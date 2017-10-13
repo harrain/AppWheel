@@ -100,7 +100,7 @@ public final class NetworkUtils {
 
     /**
      * 判断移动数据是否打开
-     *
+     * need android.permission.MODIFY_PHONE_STATE.
      * @return {@code true}: 是<br>{@code false}: 否
      */
     public static boolean getDataEnabled() {

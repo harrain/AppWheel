@@ -67,7 +67,7 @@ public class MeFragmentAdapter extends BaseAdapter<List<MeFragmentAdapter.ItemMo
 
         public int itemType;
         public String[] content;
-        private Intent intent;
+        public Intent intent;
 
         public ItemModel(int itemType, String[] content) {
             this.itemType = itemType;

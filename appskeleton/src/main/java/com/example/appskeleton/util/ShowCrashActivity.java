@@ -55,7 +55,7 @@ public class ShowCrashActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (NetworkUtils.getDataEnabled() || NetworkUtils.getWifiEnabled()){
+        if (NetworkUtils.isConnected()){
             if (SharedPrefrenceUtils.getInstance().getHasCrashLogUnupload()) uploadToServer(path);
             return;
         }

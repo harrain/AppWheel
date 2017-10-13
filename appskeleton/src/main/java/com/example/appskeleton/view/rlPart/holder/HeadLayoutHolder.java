@@ -38,17 +38,17 @@ public class HeadLayoutHolder extends BaseMyHolder<List<MeFragmentAdapter.ItemMo
     public void bind(final int position, AdapterDataOperation<List<MeFragmentAdapter.ItemModel>> ado) {
 
         try {
-            MeFragmentAdapter.ItemModel itemModel = ado.getDatas().get(position);
-//            Glide.with(mContext).load(itemModel.content[0]).into(mHeadIv);
-            mNickTv.setText(itemModel.content[1]);
-            mAccountTv.setText(itemModel.content[2]);
-
             mHeadRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mOnClickListener.onShortClick(v,position);
                 }
             });
+            MeFragmentAdapter.ItemModel itemModel = ado.getDatas().get(position);
+//            Glide.with(mContext).load(itemModel.content[0]).into(mHeadIv);
+            mNickTv.setText(itemModel.content[1]);
+            mAccountTv.setText(itemModel.content[2]);
+
         }catch (Exception e){
             LogUtils.e(tag,e.getMessage());
         }

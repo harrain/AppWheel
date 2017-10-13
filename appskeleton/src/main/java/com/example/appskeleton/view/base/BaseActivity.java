@@ -104,7 +104,8 @@ public  class BaseActivity extends AppCompatActivity {
     public void notifyData(){}
 
     public boolean checkNetStatus(View view){
-        if ( NetworkUtils.getDataEnabled() || NetworkUtils.getWifiEnabled()) return true;
+//        if (NetworkUtils.getDataEnabled() || NetworkUtils.getWifiEnabled()) return true;
+        if ( NetworkUtils.isConnected()) return true;
         Snackbar.make(view, R.string.net_internal, Snackbar.LENGTH_INDEFINITE)
                 .setAction("知道了", new View.OnClickListener() {
                     @Override

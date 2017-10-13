@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.FileNameMap;
+import java.net.SocketTimeoutException;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -360,7 +361,11 @@ public class OkUtils<T> {
             public void onFailure(Call call, IOException e) {
                 Message msg = Message.obtain();
                 msg.what = RESULT_ERROR;
-                msg.obj = e.getMessage();
+                if (e instanceof SocketTimeoutException){
+                    msg.obj = "网络连接超时";
+                }else {
+                    msg.obj = e.getMessage();
+                }
                 mHandler.sendMessage(msg);
             }
 

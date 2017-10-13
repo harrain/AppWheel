@@ -19,9 +19,13 @@ public class ProgressDialogUtil {
     }
 
     public void createLoadingProgressDialog(String title,String message){
+        createLoadingProgressDialog(title,message,true);
+    }
+
+    public void createLoadingProgressDialog(String title,String message,boolean cancelable){
         dialog = new ProgressDialog(mContext);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);// 设置进度条的形式为圆形转动的进度条
-        dialog.setCancelable(false);// 设置是否可以通过点击Back键取消
+        dialog.setCancelable(cancelable);// 设置是否可以通过点击Back键取消
         dialog.setCanceledOnTouchOutside(false);// 设置在点击Dialog外是否取消Dialog进度条
 //        dialog.setIcon(R.drawable.ic_launcher);//
         // 设置提示的title的图标，默认是没有的，如果没有设置title的话只设置Icon是不会显示图标的
@@ -77,7 +81,7 @@ public class ProgressDialogUtil {
 
     public void dismissDialog(){
         try {
-
+            if (dialog != null && dialog.isShowing())
             dialog.dismiss();
         }catch (Exception e){
             e.printStackTrace();

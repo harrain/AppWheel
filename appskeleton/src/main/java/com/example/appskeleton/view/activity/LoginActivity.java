@@ -168,13 +168,6 @@ public class LoginActivity extends BaseActivity implements LoaderManager.LoaderC
     }
 
 
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
-
     private void populateAutoComplete() {
 
 
@@ -211,8 +204,9 @@ public class LoginActivity extends BaseActivity implements LoaderManager.LoaderC
         try {
             mPresenter.login(mContext,currentUsername,currentPassword);
         } catch (Exception e) {
+//            progressDialogUtil.dismissDialog();
             LogUtils.i(tag,"login "+e.getMessage());
-            ToastUtil.showShortToast("登陆 "+e.getMessage());
+            ToastUtil.showShortToast("登陆异常 "+e.getMessage());
             e.printStackTrace();
         }
 
@@ -334,8 +328,8 @@ public class LoginActivity extends BaseActivity implements LoaderManager.LoaderC
             SharedPrefrenceUtils.getInstance().setUsername(usernameEditText.getText().toString().trim());
             finish();
         }else {
-//            ToastUtil.showShortToast(o.getMessage());
-            finish();
+//            ToastUtil.showShortToast("登录失败 "+o.getMessage());
+//            LogUtils.i(tag,"showResult ","登录失败 "+o.getMessage());
         }
     }
 
@@ -343,6 +337,7 @@ public class LoginActivity extends BaseActivity implements LoaderManager.LoaderC
     public void showError(String error) {
         progressDialogUtil.dismissDialog();
         ToastUtil.showShortToast("登录失败 "+error);
+        LogUtils.i(tag,"showError ","登录失败 "+error);
     }
 
     @Override
@@ -352,4 +347,12 @@ public class LoginActivity extends BaseActivity implements LoaderManager.LoaderC
         SharedPrefrenceUtils.getInstance().setUsername(usernameEditText.getText().toString().trim());
         if (SharedPrefrenceUtils.getInstance().isRememberPassword()) SharedPrefrenceUtils.getInstance().setPassword(passwordEditText.getText().toString().trim());
     }
+
+    @Override
+    public void onBack() {
+        super.onBack();
+        LogUtils.i(tag,"onBack");
+    }
+
+
 }
