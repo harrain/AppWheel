@@ -2,7 +2,7 @@ package com.example.appskeleton.model.business;
 
 import android.content.Context;
 
-import com.example.appskeleton.bean.json.UserBean;
+import com.example.appskeleton.bean.json.LoginResponse;
 import com.example.appskeleton.model.ModelBase;
 import com.example.appskeleton.model.OnCompleteListener;
 import com.example.appskeleton.model.net.OkUtils;
@@ -13,8 +13,8 @@ import com.example.appskeleton.model.net.OkUtils;
 
 public class ModelLogin extends ModelBase implements IModelLogin {
     @Override
-    public void login(Context context, String userName, String password,OnCompleteListener<UserBean> listener) {
-        OkUtils<UserBean> okUtils = new OkUtils<>(context);
-        okUtils.url(null).addParam(null,null).addParam(null,null).targetClass(UserBean.class).execute(listener);
+    public void login(Context context, String userName, String password,OnCompleteListener<LoginResponse> listener) {
+        OkUtils<LoginResponse> okUtils = new OkUtils<>(context);
+        okUtils.url(null).addParam(null,null).addParam(null,null).targetClass(LoginResponse.class).execute(listener);
     }
 }

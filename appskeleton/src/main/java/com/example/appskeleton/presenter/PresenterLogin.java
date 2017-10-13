@@ -2,7 +2,7 @@ package com.example.appskeleton.presenter;
 
 import android.content.Context;
 
-import com.example.appskeleton.bean.json.UserBean;
+import com.example.appskeleton.bean.json.LoginResponse;
 import com.example.appskeleton.model.OnCompleteListener;
 import com.example.appskeleton.model.business.IModelLogin;
 import com.example.appskeleton.model.business.ModelLogin;
@@ -33,9 +33,9 @@ public class PresenterLogin extends PresenterBase implements IPresenterLogin {
         if (password == null || password.equals("")) {
             throw new Exception("密码错误");
         }
-        mModel.login(context, userName, password, new OnCompleteListener<UserBean>() {
+        mModel.login(context, userName, password, new OnCompleteListener<LoginResponse>() {
             @Override
-            public void onSuccess(UserBean user) {
+            public void onSuccess(LoginResponse user) {
                 //编写登录成功的显示代码
                 mView.showResult(user,-1);
             }

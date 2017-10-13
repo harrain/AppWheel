@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme">
 
 
-        <activity android:name="com.example.appskeleton.view.activity.FrontActivity">
+        <activity android:name=".activity.LaucherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

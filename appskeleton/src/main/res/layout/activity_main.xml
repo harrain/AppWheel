@@ -20,7 +20,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
         <RadioButton
-            android:id="@+id/layout_new_good"
+            android:id="@+id/menu_item_frontpage"
             android:drawableTop="@drawable/selector_menu_item_collect"
             style="@style/menu_item_style"
             android:text="会话"
@@ -28,7 +28,7 @@
             android:textColor="@color/main_botton_text_color"
             android:checked="true"/>
         <RadioButton
-            android:id="@+id/layout_boutique"
+            android:id="@+id/menu_item_two"
             android:drawableTop="@drawable/selector_menu_item_find"
             style="@style/menu_item_style"
             android:text="发现"
@@ -37,7 +37,7 @@
             android:checked="false"/>
 
         <RadioButton
-            android:id="@+id/layout_cart"
+            android:id="@+id/menu_item_three"
             android:drawableTop="@drawable/selector_menu_item_contact"
             style="@style/menu_item_style"
             android:text="目录"

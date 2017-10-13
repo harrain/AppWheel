@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appskeleton.R;
-import com.example.appskeleton.bean.json.UserBean;
+import com.example.appskeleton.bean.json.LoginResponse;
 import com.example.appskeleton.model.util.SharedPrefrenceUtils;
 import com.example.appskeleton.presenter.PresenterLogin;
 import com.example.appskeleton.util.LogUtils;
@@ -40,7 +40,7 @@ import com.example.appskeleton.view.widget.ProEditText;
  * Login screen
  *
  */
-public class LoginActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>,IViewLogin<UserBean> {
+public class LoginActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>,IViewLogin<LoginResponse> {
     private static final String TAG = "LoginActivity";
     public static final int REQUEST_CODE_SETNICK = 1;
 
@@ -319,7 +319,7 @@ public class LoginActivity extends BaseActivity implements LoaderManager.LoaderC
 
 
     @Override
-    public void showResult(UserBean o,int flag) {
+    public void showResult(LoginResponse o,int flag) {
         LogUtils.i(tag,o.toString());
         progressDialogUtil.dismissDialog();
         if (o.getCode() == 200 && o.getMessage() .equals("登陆成功") ){

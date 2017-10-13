@@ -1,20 +1,21 @@
-package com.example.appskeleton.view.activity;
+package com.damon.appwheel.activity;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.PopupWindow;
 
+import com.damon.appwheel.fragment.FrontPageFragment;
 import com.example.appskeleton.R;
 import com.example.appskeleton.constant.Url;
-import com.example.appskeleton.model.util.SharedPrefrenceUtils;
 import com.example.appskeleton.presenter.InitConfigPresenter;
 import com.example.appskeleton.util.LogUtils;
+import com.example.appskeleton.view.activity.MainActivity;
 import com.example.appskeleton.view.fragment.DisplayFragment;
 
-public class FrontActivity extends MainActivity {
+public class LaucherActivity extends MainActivity {
 
-
+    FrontPageFragment mFrontPageFragment;
     DisplayFragment displayFragment;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
@@ -39,7 +40,7 @@ public class FrontActivity extends MainActivity {
         super.initView();
         mFragmentManager = getSupportFragmentManager();
 
-
+        mFrontPageFragment = new FrontPageFragment();
         displayFragment = new DisplayFragment();
         LogUtils.i(tag, "initview");
         setTitleMoreIcon(R.drawable.add_icon);
@@ -49,9 +50,9 @@ public class FrontActivity extends MainActivity {
 //        vdao = new VegetableDao();
 
         /**显示默认首页fragment*/
-//        mFragmentTransaction = mFragmentManager.beginTransaction();
-//        mFragmentTransaction.replace(R.id.fragment_container,mDeliveryFragment);
-//        mFragmentTransaction.commit();
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentTransaction.replace(R.id.fragment_container,mFrontPageFragment);
+        mFragmentTransaction.commit();
 
 
     }
@@ -111,20 +112,7 @@ public class FrontActivity extends MainActivity {
         super.onStart();
         LogUtils.i(tag, "onStart");
 
-        if (SharedPrefrenceUtils.getInstance().isLogin()) {
-            /** 登录情况下只获取一次数据*/
-            if (firstLoadData) {
-                LogUtils.i(tag, "firstLoadData ");
-//                mDeliveryFragment.setStatusForLoadingPage(LoadingPage.STATE_SUCCESS);
-//                mDeliveryFragment.showPage(LoadingPage.STATE_SUCCESS);
-                loadInfoFromServer();
-                firstLoadData = false;
-            }
-        } else {
-            /** 未登录，则显示未登录页面*/
-//            mDeliveryFragment.setStatusForLoadingPage(LoadingPage.STATE_UNLOGIN);
-//            mDeliveryFragment.showPage(LoadingPage.STATE_UNLOGIN);
-        }
+
     }
 
     public void loadInfoFromServer() {
@@ -138,10 +126,17 @@ public class FrontActivity extends MainActivity {
         super.onCheckedChange(v);
 //        netTest();
         if (v.getId() == R.id.layout_personal_center) {
-
+            /** 切换fragment*/
             mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.fragment_container, displayFragment);
             mFragmentTransaction.commit();
+            /** 设置titlebar标题*/
+            setmTTitle("我");
+        }else if (v.getId() == R.id.menu_item_frontpage){
+            mFragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentTransaction.replace(R.id.fragment_container, mFrontPageFragment);
+            mFragmentTransaction.commit();
+            setmTTitle("hey首页");
         }
     }
 
