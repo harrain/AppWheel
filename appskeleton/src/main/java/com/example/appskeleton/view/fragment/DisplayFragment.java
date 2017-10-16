@@ -24,6 +24,7 @@ import com.example.appskeleton.util.ToastUtil;
 import com.example.appskeleton.view.activity.DeviceActivity;
 import com.example.appskeleton.view.activity.FrontActivity;
 import com.example.appskeleton.view.activity.LoginActivity;
+import com.example.appskeleton.view.activity.ProfileActivity;
 import com.example.appskeleton.view.rlPart.MeFragmentAdapter;
 import com.example.appskeleton.view.rlPart.base.BaseAdapter;
 import com.example.appskeleton.view.util.AlertDialogUtil;
@@ -68,7 +69,7 @@ public class DisplayFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_display, container, false);
         unbinder = ButterKnife.bind(this, view);
         mContext = getActivity();
-        ((FrontActivity) mContext).setmTTitle("我");
+
         initItemModel();
         initRecyclerView();
 //        packageDao = new PackageDao();
@@ -78,7 +79,7 @@ public class DisplayFragment extends Fragment {
     }
     private void initItemModel() {
         mItemList.add(new MeFragmentAdapter.ItemModel(MeFragmentAdapter.HEAD_LAYOUT
-                ,new String[]{"","账号 未登录"},new Intent(mContext, LoginActivity.class)));
+                ,new String[]{"","账号 未登录"},new Intent(mContext, ProfileActivity.class)));
         mItemList.add(new MeFragmentAdapter.ItemModel(MeFragmentAdapter.EMPTY_LAYOUT,null));
 //        mItemList.add(new MeFragmentAdapter.ItemModel(MeFragmentAdapter.TEXT_ONOFF_LAYOUT
 //                ,new String[]{"自动定位"}));

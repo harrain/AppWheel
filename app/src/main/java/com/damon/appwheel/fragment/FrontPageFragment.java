@@ -34,7 +34,6 @@ import com.example.appskeleton.view.widget.LoadingPage;
 import java.util.LinkedList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -44,7 +43,7 @@ import butterknife.Unbinder;
 
 public class FrontPageFragment extends BaseFragment {
 
-    @BindView(R.id.list)
+
     RecyclerView mList;
     private SubscriberOnNextListener<List<HotThing>> getTopMovieOnNext;
     private HotListAdapter mHotListAdapter;
@@ -64,6 +63,7 @@ public class FrontPageFragment extends BaseFragment {
     public View createSuccessView(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_frontpage,container,false);
         unbinder = ButterKnife.bind(this,view);
+        mList = (RecyclerView) view.findViewById(R.id.list);
         initView();
         initData();
         return view;
@@ -115,7 +115,7 @@ public class FrontPageFragment extends BaseFragment {
 
     private void setEditBetterList(List<DelegateAdapter.Adapter> mAdapters) {
         LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
-        linearLayoutHelper.setMarginBottom(10);
+        linearLayoutHelper.setMarginBottom(10);//item之间的间隙，好用。不用addItemDecoration
         mEditBetterAdapter = new EditBetterAdapter(mContext, linearLayoutHelper);
         mAdapters.add(mEditBetterAdapter);
     }

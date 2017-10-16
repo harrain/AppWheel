@@ -15,7 +15,7 @@ import java.util.List;
  * Created by zhy on 16/4/9.
  */
 public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
-    protected Context mContext;
+    public Context mContext;
     protected List<T> mDatas;
 
     protected ItemViewDelegateManager mItemViewDelegateManager;

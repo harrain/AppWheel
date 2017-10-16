@@ -2,6 +2,7 @@ package com.example.appskeleton.view.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -71,17 +72,8 @@ public  class BaseActivity extends AppCompatActivity {
         activity = null;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        synchronized (mActivities) {
-            mActivities.remove(this);
-        }
-        fixInputMethodManagerLeak(this);
-//		if(receiver!=null){
-//			unregisterReceiver(receiver);
-//			receiver=null;
-//		}
+    public <T extends View> T getView(@IdRes int viewId){
+        return (T) findViewById(viewId);
     }
 
     public static void killAll() {
@@ -148,7 +140,18 @@ public  class BaseActivity extends AppCompatActivity {
         finish();
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        synchronized (mActivities) {
+            mActivities.remove(this);
+        }
+        fixInputMethodManagerLeak(this);
+//		if(receiver!=null){
+//			unregisterReceiver(receiver);
+//			receiver=null;
+//		}
+    }
 
     public void fixInputMethodManagerLeak(Context destContext) {
         if (destContext == null) {
