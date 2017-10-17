@@ -33,6 +33,8 @@ public class UIConstants {
         int SHOW_PIC = 1;
         int ZXING_CODE = 2;
         int OPEN_GPS = 3;
+        int TAKE_PHOTO = 11;
+        int CHOOSE_PHOTO = 12;
     }
 
     public interface RESULT_CODE {

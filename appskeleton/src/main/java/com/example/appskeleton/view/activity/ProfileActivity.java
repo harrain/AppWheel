@@ -1,14 +1,20 @@
 package com.example.appskeleton.view.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.example.appskeleton.R;
 import com.example.appskeleton.R2;
 import com.example.appskeleton.bean.listitem.ProfileItemBean;
+import com.example.appskeleton.model.util.GalaryHelper;
+import com.example.appskeleton.util.ToastUtil;
 import com.example.appskeleton.view.adapter.ProfileAdapter;
 import com.example.appskeleton.view.base.BaseTitleActivity;
+import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +29,7 @@ public class ProfileActivity extends BaseTitleActivity {
     RecyclerView profileRv;
     private List<ProfileItemBean> list;
     private ProfileAdapter adapter;
+    private GalaryHelper galaryHelper;
 
     @Override
     public void initView() {
@@ -31,12 +38,14 @@ public class ProfileActivity extends BaseTitleActivity {
         ButterKnife.bind(this);
         setmTTitle("个人信息");
 
+        galaryHelper = new GalaryHelper(mContext);
         initRecyclerView();
         initItemBean();
     }
 
     private void initItemBean() {
         list.add(new ProfileItemBean("头像",null,null,R.drawable.default_hd_avatar,0));
+//        list.add(new ProfileItemBean("头像",null,"/Android/data/com.damon.appwheel/cache/output_image_36777274.jpg",-1,0));
         list.add(new ProfileItemBean("昵称","晏城",null,0,1));
         list.add(new ProfileItemBean("性别",null,null,0,1));
         list.add(new ProfileItemBean("我的地址",null,null,0,1));
@@ -51,7 +60,40 @@ public class ProfileActivity extends BaseTitleActivity {
         profileRv.setLayoutManager(manager);
         DividerItemDecoration decoration = new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL);
         profileRv.addItemDecoration(decoration);
+
+        adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                if (list.get(position).itemType == 0){
+                    galaryHelper.showChooseDialog();
+                }
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) {
+            ToastUtil.showShortToast("您取消了操作");
+            return;
+        }
+        galaryHelper.handleResult(requestCode, data, new GalaryHelper.ShowImageListener() {
+            @Override
+            public void showImage(String imagePath, Uri uri) {
+                if (uri!=null){
+                    list.get(0).setUri(uri);
+                }else {
+                    list.get(0).setImgPath(imagePath);
+                }
+                list.get(0).setResId(0);
+                adapter.notifyItemChanged(0);
+            }
+        });
+    }
 }

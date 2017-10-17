@@ -4,11 +4,12 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.example.appskeleton.R;
 import com.example.appskeleton.bean.listitem.ProfileItemBean;
 import com.example.appskeleton.view.itemDelegate.TextImageItemDelegate;
 import com.example.appskeleton.view.itemDelegate.TextOnlyItemDelegate;
+import com.example.appskeleton.view.util.GlideUtil;
+import com.example.appskeleton.view.util.UIConvertUtils;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -45,12 +46,23 @@ public class ProfileAdapter extends MultiItemTypeAdapter<ProfileItemBean> {
                 if (!TextUtils.isEmpty(o.getText()))
                     holder.setText(R.id.item_tv_text,o.getText());
                 if (!TextUtils.isEmpty(o.getImgPath()))
-                    Glide.with(mContext).load(o.getImgPath()).into((ImageView) holder.getView(R.id.item_iv_des));
+                    GlideUtil.showImage(mContext,o.getImgPath(),(ImageView) holder.getView(R.id.item_iv_des)
+                    , UIConvertUtils.dp2px(40),UIConvertUtils.dp2px(40));
+
 
                 ImageView imageView =  (ImageView) holder.getView(R.id.item_iv_des);
 
-                if (o.getResId() != 0){}
-                    Glide.with(mContext).load(o.getResId()).into(imageView);
+                if (o.getResId() > 0){
+
+                    GlideUtil.showImage(mContext,o.getResId(),(ImageView) holder.getView(R.id.item_iv_des)
+                            , UIConvertUtils.dp2px(40),UIConvertUtils.dp2px(40));
+                }
+
+                if (o.getUri()!=null){
+
+                    GlideUtil.showImage(mContext,o.getUri(),(ImageView) holder.getView(R.id.item_iv_des)
+                            , UIConvertUtils.dp2px(40),UIConvertUtils.dp2px(40));
+                }
             }
 
             @Override

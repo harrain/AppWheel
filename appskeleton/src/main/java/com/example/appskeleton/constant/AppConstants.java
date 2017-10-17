@@ -20,6 +20,8 @@ public class AppConstants {
     public static final String GALARY_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath()+"/";
     public static final String LOCATION_BROADCAST = "com.example.demowechat.map.latlng";
 
+    public static final String FILEPROVIDER_AUTHORITY = "com.example.appskeleton.fileprovider";
+
 
 
 }
