@@ -63,6 +63,10 @@ public class ProfileAdapter extends MultiItemTypeAdapter<ProfileItemBean> {
                     GlideUtil.showImage(mContext,o.getUri(),(ImageView) holder.getView(R.id.item_iv_des)
                             , UIConvertUtils.dp2px(40),UIConvertUtils.dp2px(40));
                 }
+                if (o.getImg() != null){
+                    GlideUtil.showImage(mContext,o.getImg(),(ImageView) holder.getView(R.id.item_iv_des)
+                            , UIConvertUtils.dp2px(40),UIConvertUtils.dp2px(40));
+                }
             }
 
             @Override

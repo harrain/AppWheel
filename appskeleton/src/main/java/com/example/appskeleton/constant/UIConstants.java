@@ -35,6 +35,7 @@ public class UIConstants {
         int OPEN_GPS = 3;
         int TAKE_PHOTO = 11;
         int CHOOSE_PHOTO = 12;
+        int WX_PICKIMAGE = 100;
     }
 
     public interface RESULT_CODE {

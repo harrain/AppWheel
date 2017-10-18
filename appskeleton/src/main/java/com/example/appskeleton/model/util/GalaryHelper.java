@@ -20,13 +20,21 @@ import android.util.Log;
 
 import com.example.appskeleton.constant.AppConstants;
 import com.example.appskeleton.constant.UIConstants;
+import com.example.appskeleton.model.operation.GlideImageLoader;
 import com.example.appskeleton.util.LogUtils;
 import com.example.appskeleton.util.ToastUtil;
 import com.example.appskeleton.view.util.AlertDialogUtil;
+import com.example.appskeleton.view.util.UIConvertUtils;
+import com.lzy.imagepicker.Constants;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.imagepicker.view.CropImageView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import io.reactivex.functions.Consumer;
 
@@ -43,13 +51,18 @@ public class GalaryHelper {
     private ShowImageListener mShowImageListener;
     private RxPermissions rxpermissions;
     private java.lang.String tag = "GalaryHelper";
+    private final ImagePicker imagePicker;
 
     public GalaryHelper(Context context) {
         mContext = context;
         rxpermissions = new RxPermissions((Activity) mContext);
+        imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
+        imagePicker.setShowCamera(true);  //显示拍照按钮
     }
 
     /**
+     * 系统原生方式，提示框，选择拍照还是相册，
      * 启动dialog， 提示是拍照，还是从相册中选取
      * which : 0  拍照 ； 1  从相册选取
      */
@@ -123,7 +136,8 @@ public class GalaryHelper {
     /**
      * 在context所在的activity的onActivityResult调用一下方法，接管onActivityResult处理结果
      */
-    public void handleResult(int requestCode,Intent data,ShowImageListener listener) {
+    public void handleResult(int requestCode,int resultCode,Intent data,ShowImageListener listener) {
+        if (resultCode != UIConstants.RESULT_CODE.RESULT_OK) return;
         mShowImageListener = listener;
         if (requestCode == UIConstants.REQUEST_CODE.TAKE_PHOTO) {
             try {
@@ -136,7 +150,7 @@ public class GalaryHelper {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (requestCode == UIConstants.REQUEST_CODE.CHOOSE_PHOTO){
+        } else if (requestCode == UIConstants.REQUEST_CODE.CHOOSE_PHOTO && data != null){
             // 判断手机系统版本号
             if (Build.VERSION.SDK_INT >= 19) {
                 // 4.4及以上系统使用这个方法处理图片
@@ -212,4 +226,35 @@ public class GalaryHelper {
     public interface ShowImageListener{
         void showImage(String imagePath,Uri uri);
     }
+
+    public interface ImagePickerResultListener{
+        void showImage(List<ImageItem> imageItemList);
+    }
+
+    public GalaryHelper initCropLikeWXAvatar(){
+        imagePicker.setMultiMode(false);
+        imagePicker.setCrop(true);        //允许裁剪（单选才有效）
+        imagePicker.setSaveRectangle(true); //是否按矩形区域保存
+        imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
+        imagePicker.setFocusWidth(UIConvertUtils.dp2px(Constants.FOCUS_WIDTH));   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(UIConvertUtils.dp2px(Constants.FOCUS_HEIGHT));  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(UIConvertUtils.dp2px(Constants.OUTPUT_X));//保存文件的宽度。单位像素
+        imagePicker.setOutPutY(UIConvertUtils.dp2px(Constants.OUTPUT_Y));//保存文件的高度。单位像素
+        return this;
+    }
+
+    public void pickPhoto(){
+        Intent intent = new Intent(mContext, ImageGridActivity.class);
+        ((AppCompatActivity)mContext).startActivityForResult(intent,UIConstants.REQUEST_CODE.WX_PICKIMAGE);
+    }
+
+    public void handleWXPickerData(int requestCode,int resultCode,Intent data,ImagePickerResultListener listener){
+        if (requestCode == UIConstants.REQUEST_CODE.WX_PICKIMAGE && resultCode == ImagePicker.RESULT_CODE_ITEMS && data !=null){
+            List<ImageItem> list = (List<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+            if (listener!=null && list!=null)
+            listener.showImage((list));
+
+        }
+    }
+
 }

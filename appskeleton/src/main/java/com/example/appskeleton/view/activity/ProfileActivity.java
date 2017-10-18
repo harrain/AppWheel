@@ -11,11 +11,12 @@ import com.example.appskeleton.R;
 import com.example.appskeleton.R2;
 import com.example.appskeleton.bean.listitem.ProfileItemBean;
 import com.example.appskeleton.model.util.GalaryHelper;
-import com.example.appskeleton.util.ToastUtil;
 import com.example.appskeleton.view.adapter.ProfileAdapter;
 import com.example.appskeleton.view.base.BaseTitleActivity;
+import com.lzy.imagepicker.bean.ImageItem;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +66,8 @@ public class ProfileActivity extends BaseTitleActivity {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 if (list.get(position).itemType == 0){
-                    galaryHelper.showChooseDialog();
+//                    galaryHelper.showChooseDialog();//系统原生方式，提示框，选择拍照还是相册，
+                    galaryHelper.initCropLikeWXAvatar().pickPhoto();
                 }
             }
 
@@ -79,11 +81,8 @@ public class ProfileActivity extends BaseTitleActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK) {
-            ToastUtil.showShortToast("您取消了操作");
-            return;
-        }
-        galaryHelper.handleResult(requestCode, data, new GalaryHelper.ShowImageListener() {
+
+        galaryHelper.handleResult(requestCode,resultCode, data, new GalaryHelper.ShowImageListener() {
             @Override
             public void showImage(String imagePath, Uri uri) {
                 if (uri!=null){
@@ -93,6 +92,16 @@ public class ProfileActivity extends BaseTitleActivity {
                 }
                 list.get(0).setResId(0);
                 adapter.notifyItemChanged(0);
+            }
+        });
+        galaryHelper.handleWXPickerData(requestCode,resultCode, data, new GalaryHelper.ImagePickerResultListener() {
+            @Override
+            public void showImage(List<ImageItem> imageItemList) {
+                ImageItem item = imageItemList.get(0);
+                list.get(0).setImg(new File(item.path));
+                adapter.notifyItemChanged(0);
+
+
             }
         });
     }
