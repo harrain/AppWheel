@@ -5,7 +5,7 @@ import com.example.appskeleton.util.LogUtils;
 import com.example.appskeleton.util.ToastFactory;
 
 /**
- * Created by data on 2017/10/12.
+ * origin为之前写的版本
  */
 
 public class App extends MyApplication {
