@@ -5,12 +5,14 @@
     - MyApplication App
     - BaseActivity,BaseTitleBarActivity,BaseNetStatusActivity
     - BaseFragment
+    - bottomNavigation带消息提醒小红点
+    - tabLayout充分自定义形式
+    - searchbar待加入
 
 - 功能组件
     - okhttp
     - rxpermissions
     - ......
-    - ( greendao , baidumap已经做成独立library 之后会放上一个完整demo)
 
 - Utils
     - 参考androidutilcode
@@ -19,7 +21,7 @@
     - progressbar、alertdialog
 
 - MVP封装
-    - 分包、自己写的简易MVP架构）
+    - 分包、自己写的简易MVP架构
 
 - 常用的res
     - drawable(selector、shape 、ripple、png)

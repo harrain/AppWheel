@@ -12,7 +12,7 @@ import com.damon.appwheel.util.LogUtils;
 import com.damon.appwheel.util.ToastFactory;
 
 /**
- * Created by data on 2017/10/12.
+ * master分支为最新（MD风格），origin分支为之前写的版本
  */
 
 public class App extends Application {
