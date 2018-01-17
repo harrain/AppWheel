@@ -1,8 +1,8 @@
 package com.damon.appwheel.api;
 
-import com.damon.appwheel.home.editbetter.EditBetter;
-import com.damon.appwheel.home.hotlist.HotThing;
-import com.damon.appwheel.home.limitedvolume.LimitedVolume;
+import com.damon.appwheel.ui.home.editbetter.EditBetter;
+import com.damon.appwheel.ui.home.hotlist.HotThing;
+import com.damon.appwheel.ui.home.limitedvolume.LimitedVolume;
 import com.damon.appwheel.utils.HttpsResult;
 
 import java.util.List;

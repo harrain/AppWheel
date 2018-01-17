@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">AppWheel</string>
-    <string name="net_internal">网络连接失败，将无法更新订单状态！请检查网络或移至信号通畅地带</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="User_name_cannot_be_empty">账号不能为空</string>
-    <string name="Password_cannot_be_empty">密码不能为空</string>
-    <string name="net_tip_forcrash">网络连接失败，请打开网络，点击上传日志帮助我们解决应用错误。</string>
-</resources>

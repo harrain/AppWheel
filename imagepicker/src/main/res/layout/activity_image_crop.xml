@@ -8,7 +8,7 @@
 
     <include layout="@layout/include_top_bar"/>
 
-   <!-- <com.lzy.imagepicker.view.CropImageView
+   <!-- <com.lzy.imagepicuiview.CropImageView
         android:id="@+id/cv_crop_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>-->
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <!-- <com.lzy.imagepicker.view.crop.CropImageView2
+    <!-- <com.lzy.imagepicuiview.crop.CropImageView2
          android:id="@+id/cv_crop_image"
          android:layout_width="match_parent"
          android:layout_height="match_parent"

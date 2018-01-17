@@ -1,6 +1,6 @@
 package com.damon.appwheel.api;
 
-import com.damon.appwheel.home.editbetter.EditBetter;
+import com.damon.appwheel.ui.home.editbetter.EditBetter;
 import com.damon.appwheel.utils.HttpsResult;
 
 import java.util.List;
